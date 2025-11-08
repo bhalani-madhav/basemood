@@ -1,19 +1,18 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { MiniAppProvider } from "@neynar/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { WagmiProvider } from "wagmi";
+import { config } from "~/components/providers/WagmiProvider";
+import { ReactNode } from "react";
 
-const WagmiProvider = dynamic(
-  () => import("~/components/providers/WagmiProvider"),
-  {
-    ssr: false,
-  }
-);
+const queryClient = new QueryClient();
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({ children }: { children: ReactNode }) {
   return (
-    <WagmiProvider>
-      <MiniAppProvider analyticsEnabled={true}>{children}</MiniAppProvider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        {children}
+      </QueryClientProvider>
     </WagmiProvider>
   );
 }
