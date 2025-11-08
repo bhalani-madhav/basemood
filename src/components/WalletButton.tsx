@@ -19,7 +19,7 @@ export default function WalletButton() {
         if (coinbaseConnector) {
           try {
             connect({ connector: coinbaseConnector });
-          } catch (error) {
+          } catch {
             // Silently fail if user rejects
           }
         }
